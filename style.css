@@ -21,6 +21,9 @@
 
   /* Typography */
   --fs-title: 1.125rem;
+
+  /* Transition */
+  --tr-primary: 0.5s all ease;
 }
 
 /* Reset Styles */
@@ -113,36 +116,39 @@ nav {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  color: var(--desaturated-blue);
+
   font-weight: 400;
   font-size: 1.1rem;
 }
 
-nav span {
+nav button {
   cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--desaturated-blue);
+  transition: var(--tr-primary);
 }
 
-nav span:hover {
+nav button:hover {
   color: #fff;
 }
 
 .schedule {
   display: flex;
   flex-direction: column;
-  background-color: var(--dark-blue);
+
   border-radius: 15px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .top-design-logo {
-  background-color: var(--light-red-work);
   background-image: url(./images/icon-work.svg);
   background-repeat: no-repeat;
   height: 2.4rem;
   background-position: top -10px right 15px;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  transition: var(--tr-primary);
 }
 
 .schedule-details {
@@ -151,6 +157,15 @@ nav span:hover {
   padding: 1.5rem;
   justify-content: center;
   gap: 0.3rem;
+  border-radius: 15px;
+  background-color: var(--dark-blue);
+  transition: var(--tr-primary);
+}
+
+.schedule-details:hover {
+  cursor: pointer;
+  /* padding-bottom: 2.8rem; */
+  background-color: hsl(235, 46%, 40%);
 }
 
 .schedule-title-container {
@@ -183,6 +198,31 @@ nav span:hover {
 }
 
 /* Change background image per category */
+
+#work {
+  background-color: var(--light-red-work);
+}
+
+#play {
+  background-color: var(--soft-blue-play);
+}
+
+#study {
+  background-color: var(--light-red-study);
+}
+
+#exercise {
+  background-color: var(--lime-green-exercise);
+}
+
+#social {
+  background-color: var(--violet-social);
+}
+
+#self-care {
+  background-color: var(--soft-orange-self-care);
+}
+
 .play {
   background-color: var(--soft-blue-play);
   background-image: url(./images/icon-play.svg);
@@ -261,9 +301,15 @@ nav span:hover {
 
   nav {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .schedule-details {
     padding: 1.5rem;
+    gap: 1.3rem;
+  }
+
+  .schedule-time-container {
+    gap: 0.5rem;
   }
 }
