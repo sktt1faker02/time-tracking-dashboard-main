@@ -133,6 +133,10 @@ nav button:hover {
   color: #fff;
 }
 
+.active {
+  color: #fff;
+}
+
 .schedule {
   display: flex;
   flex-direction: column;
