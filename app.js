@@ -5,11 +5,22 @@ const currentTime = document.querySelectorAll(".schedule-time");
 
 // Display in Elements
 
-const displayTime = function (time) {
-  currentTime.forEach((timeEl) => {
-    // console.log(timeEl, timeEl.nextElementSibling);
-    console.log(timeEl);
+const displayTime = function (timedata) {
+  currentTime.forEach((timeEl, i) => {
+    timeEl.textContent = `${timedata[0][i]} hrs`;
+    timeEl.nextElementSibling.textContent = `Last week - ${timedata[1][i]} hrs`;
   });
+};
+
+const getTime = function (time, type) {
+  const timeData = [[], []];
+
+  time.map((e, i) => {
+    timeData[0].push(e[`${type}`].current);
+    timeData[1].push(e[`${type}`].previous);
+  });
+
+  displayTime(timeData);
 };
 
 // Render Time
@@ -18,39 +29,33 @@ const renderTime = function (time) {
     buttons.addEventListener("click", (e) => {
       activateClickedButton(buttons);
 
-      if (e.currentTarget.textContent === "Daily") {
-        console.log(time);
-        //  displayTime(time);
-      }
-      if (e.currentTarget.textContent === "Weekly") console.log(time.weekly);
-      if (e.currentTarget.textContent === "Monthly") console.log(time.monthly);
+      if (e.currentTarget.textContent === "Daily") getTime(time, "daily");
+      if (e.currentTarget.textContent === "Weekly") getTime(time, "weekly");
+      if (e.currentTarget.textContent === "Monthly") getTime(time, "monthly");
     });
   });
 };
 
 // Get Data
+
+let timeFrameData = [];
+
 const getTimeData = fetch("./data.json")
   .then((response) => response.json())
   .then((data) => {
     return data;
-    // data.map(({ title, timeframes } = time) => {
-    //   // renderTime(timeframes);
-    //   return timeframes;
-    // });
   })
   .catch((error) => console.log(error));
 
 const getTimeFrames = async () => {
-  let timeFrameData;
   const timeFrame = await getTimeData;
 
   timeFrame.map(({ title, timeframes } = time) => {
-    timeFrameData = Object.assign({}, timeframes);
+    timeFrameData.push({ ...timeframes });
   });
 
-  console.log(timeFrameData);
-
   renderTime(timeFrameData);
+  init(timeFrameData);
 };
 
 getTimeFrames();
@@ -62,14 +67,18 @@ const activateClickedButton = (button) => {
   button.classList.add("active");
 };
 
-// scheduleButtons.forEach((buttons) => {
-//   buttons.addEventListener("click", (e) => {
-//     activateClickedButton(buttons);
+// Init
+const init = (data) => {
+  //   renderTime(data);
+  getTime(data, "weekly");
+  document.getElementById("weekly").classList.add("active");
+};
 
-//     if (e.currentTarget.textContent === "Daily") console.log("Daily");
-//     if (e.currentTarget.textContent === "Weekly") console.log("Weekly");
-//     if (e.currentTarget.textContent === "Monthly") console.log("Monthly");
-//   });
-// });
+// Practice Async/Await
 
-// currentTime.forEach((e) => console.log(e.textContent));
+// const getApi = async function () {
+//   const res = await fetch("./data.json");
+//   const data = await res.json();
+//   init(data);
+// };
+// getApi();
